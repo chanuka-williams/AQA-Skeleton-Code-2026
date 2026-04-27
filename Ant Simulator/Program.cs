@@ -158,11 +158,22 @@ namespace AntSimCS
                 }
                 for (int Count = 1; Count <= StartingNumberOfFoodCells; Count++)
                 {
+                    bool Allowed;
                     do
                     {
+                        Allowed = true;
                         Row = RGen.Next(1, NumberOfRows + 1);
                         Column = RGen.Next(1, NumberOfColumns + 1);
-                    } while (Row == 2 && Column == 4);
+                        
+                        foreach (Nest N in Nests)
+                        {
+                            if (N.GetRow() == Row && N.GetColumn() == Column)
+                            {
+                                Allowed = false;
+                            }
+                        }
+                    } while (!Allowed);
+                    
                     AddFoodToCell(Row, Column, 500);
                 }
             }

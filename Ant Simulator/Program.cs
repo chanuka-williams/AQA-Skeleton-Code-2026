@@ -16,23 +16,33 @@ namespace AntSimCS
         static void Main()
         {
             List<int> SimulationParameters = new List<int>();
-            Console.Write("Enter simulation number: ");
-            string SimNo = Console.ReadLine();
-            switch (SimNo)
+
+            string SimNo;
+            while (true)
             {
-                case "1":
-                    SimulationParameters = new List<int> { 1, 5, 5, 500, 3, 5, 1000, 50 };
-                    break;
-                case "2":
-                    SimulationParameters = new List<int> { 1, 5, 5, 500, 3, 5, 1000, 100 };
-                    break;
-                case "3":
-                    SimulationParameters = new List<int> { 1, 10, 10, 500, 3, 9, 1000, 25 };
-                    break;
-                case "4":
-                    SimulationParameters = new List<int> { 2, 10, 10, 500, 3, 6, 1000, 25 };
-                    break;
+                Console.Write("Enter simulation number: ");
+                SimNo = Console.ReadLine();
+                switch (SimNo)
+                {
+                    case "1":
+                        SimulationParameters = new List<int> { 1, 5, 5, 500, 3, 5, 1000, 50 };
+                        break;
+                    case "2":
+                        SimulationParameters = new List<int> { 1, 5, 5, 500, 3, 5, 1000, 100 };
+                        break;
+                    case "3":
+                        SimulationParameters = new List<int> { 1, 10, 10, 500, 3, 9, 1000, 25 };
+                        break;
+                    case "4":
+                        SimulationParameters = new List<int> { 2, 10, 10, 500, 3, 6, 1000, 25 };
+                        break;
+                    default:
+                        continue;
+                }
+
+                break;
             }
+            
             Simulation ThisSimulation = new Simulation(SimulationParameters);
             string Choice;
             do

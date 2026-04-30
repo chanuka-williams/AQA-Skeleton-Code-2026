@@ -66,12 +66,14 @@ namespace AntSimCS
                         break;
                     case "4":
                         ThisSimulation.AdvanceStage(1);
+                        ThisSimulation.DisplayGrid();
                         Console.WriteLine($"Simulation moved on one stage{Environment.NewLine}");
                         break;
                     case "5":
                         Console.Write("Enter number of stages to advance by: ");
                         int NumberOfStages = Convert.ToInt32(Console.ReadLine());
                         ThisSimulation.AdvanceStage(NumberOfStages);
+                        ThisSimulation.DisplayGrid();
                         Console.WriteLine($"Simulation moved on {NumberOfStages} stages{Environment.NewLine}");
                         break;
                     case "6":
@@ -79,7 +81,6 @@ namespace AntSimCS
                         break;
                 }
             } while (Choice != "9");
-            Console.ReadLine();
         }
         static void DisplayMenu()
         {
@@ -89,6 +90,7 @@ namespace AntSimCS
             Console.WriteLine("3. Inspect cell");
             Console.WriteLine("4. Advance one stage");
             Console.WriteLine("5. Advance X stages");
+            Console.WriteLine("6. Display grid");
             Console.WriteLine("9. Quit");
             Console.WriteLine();
             Console.Write("> ");

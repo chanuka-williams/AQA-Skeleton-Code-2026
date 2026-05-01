@@ -774,6 +774,11 @@ namespace AntSimCS
                     ChangeCell(IndexToUse, ref Row, ref Column);
                 }
             }
+
+            public override string GetDetails()
+            {
+                return $"{base.GetDetails()}, carrying {AmountOfFoodCarried} food, home nest is at {NestRow} {NestColumn}";
+            }
         }
 
         class Nest : Entity

@@ -42,7 +42,6 @@ namespace AntSimCS
 
                 break;
             }
-            
             Simulation ThisSimulation = new Simulation(SimulationParameters);
             string Choice;
             do
@@ -67,19 +66,22 @@ namespace AntSimCS
                         break;
                     case "4":
                         ThisSimulation.AdvanceStage(1);
+                        ThisSimulation.DisplayGrid();
                         Console.WriteLine($"Simulation moved on one stage{Environment.NewLine}");
                         break;
                     case "5":
                         Console.Write("Enter number of stages to advance by: ");
                         int NumberOfStages = Convert.ToInt32(Console.ReadLine());
                         ThisSimulation.AdvanceStage(NumberOfStages);
+                        ThisSimulation.DisplayGrid();
                         Console.WriteLine($"Simulation moved on {NumberOfStages} stages{Environment.NewLine}");
+                        break;
+                    case "6":
+                        ThisSimulation.DisplayGrid();
                         break;
                 }
             } while (Choice != "9");
-            Console.ReadLine();
         }
-
         static void DisplayMenu()
         {
             Console.WriteLine();
@@ -88,6 +90,7 @@ namespace AntSimCS
             Console.WriteLine("3. Inspect cell");
             Console.WriteLine("4. Advance one stage");
             Console.WriteLine("5. Advance X stages");
+            Console.WriteLine("6. Display grid");
             Console.WriteLine("9. Quit");
             Console.WriteLine();
             Console.Write("> ");
@@ -164,7 +167,6 @@ namespace AntSimCS
                         Allowed = true;
                         Row = RGen.Next(1, NumberOfRows + 1);
                         Column = RGen.Next(1, NumberOfColumns + 1);
-                        
                         foreach (Nest N in Nests)
                         {
                             if (N.GetRow() == Row && N.GetColumn() == Column)
@@ -173,9 +175,53 @@ namespace AntSimCS
                             }
                         }
                     } while (!Allowed);
-                    
                     AddFoodToCell(Row, Column, 500);
                 }
+            }
+
+            public void DisplayGrid()
+            {
+                var Symbols = new Dictionary<string, string>
+                {
+                    { "Nest", "N" },
+                    { "Ant", "a" },
+                    { "FoodSource", "F" },
+                    { "PhermoneTrail", "." }
+                };
+
+                string[,] DisplayGrid = new string[NumberOfRows, NumberOfColumns];
+
+                foreach (Cell CurrentCell in Grid)
+                {
+                    int Row = CurrentCell.GetRow() - 1;
+                    int Column = CurrentCell.GetColumn() - 1;
+                    DisplayGrid[Row, Column] = "";
+                    DisplayGrid[Row, Column] = CurrentCell.GetAmountOfFood() > 0 ? Symbols["FoodSource"] : DisplayGrid[Row, Column];
+                    DisplayGrid[Row, Column] = GetNumberOfPheromonesInCell(CurrentCell) > 0 ? Symbols["PhermoneTrail"] : DisplayGrid[Row, Column];
+                    DisplayGrid[Row, Column] = GetNumberOfAntsInCell(CurrentCell) > 0 ? $"{Symbols["Ant"]}{GetNumberOfAntsInCell(CurrentCell)}" : DisplayGrid[Row, Column];
+                    DisplayGrid[Row, Column] = GetNestInCell(CurrentCell) != null ? $"{Symbols["Nest"]}{GetNestInCell(CurrentCell).GetFoodLevel() / 100}" : DisplayGrid[Row, Column];
+                }
+
+                Console.WriteLine("     1    2    3    4    5 ");
+                for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
+                {
+                    Console.WriteLine("  +----+----+----+----+----+");
+                    for (int Column = 0; Column < DisplayGrid.GetLength(1); Column++)
+                    {
+                        if (Column == 0)
+                        {
+                            Console.Write($"{Row + 1} ");
+                        }
+
+                        Console.Write($"| {DisplayGrid[Row, Column]} ".PadRight(5));
+
+                        if (Column >= DisplayGrid.GetLength(1) - 1)
+                        {
+                            Console.WriteLine("|");
+                        }
+                    }
+                }
+                Console.WriteLine("  +----+----+----+----+----+");
             }
 
             public void SetUpANestAt(int Row, int Column)
@@ -753,7 +799,7 @@ namespace AntSimCS
                 if (FoodLevel < Ants.Count * 5)
                 {
                     AntsToCull++;
-                    if (AntsToCull > Ants.Count) 
+                    if (AntsToCull > Ants.Count)
                     {
                         AntsToCull = Ants.Count;
                     }
@@ -775,11 +821,11 @@ namespace AntSimCS
                         if (RNo1 < 50)
                         {
                             int RNo2 = RGen.Next(0, 100);
-                            if (RNo2 < 2) 
+                            if (RNo2 < 2)
                             {
                                 Ants.Add(new QueenAnt(Row, Column, Row, Column));
                             }
-                            else 
+                            else
                             {
                                 Ants.Add(new WorkerAnt(Row, Column, Row, Column));
                             }

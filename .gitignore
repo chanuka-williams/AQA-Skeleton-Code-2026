@@ -3,3 +3,6 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+Ant Simulator/.sync-exclude.lst
+.zed/
+.sync-exclude.lst

@@ -179,6 +179,14 @@ namespace AntSimCS
                 }
             }
 
+            private static void PrintColumnHeaders(int Columns)
+            {
+                Console.Write(" ");
+                for (int Column = 0; Column < Columns; Column++)
+                    Console.Write($"    {Column + 1}");
+                Console.Write("\n");
+            }
+
             private static void PrintRowDivider(int Columns)
             {
                 Console.Write("  +");
@@ -211,13 +219,7 @@ namespace AntSimCS
                 }
 
 
-                //Prints column headers dynamically
-                Console.Write(" ");
-                for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
-                {
-                    Console.Write($"    {Row + 1}");
-                }
-                Console.Write("\n");
+                PrintColumnHeaders(DisplayGrid.GetLength(1));
 
                 for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
                 {

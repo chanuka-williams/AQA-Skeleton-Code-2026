@@ -738,6 +738,44 @@ namespace AntSimCS
             }
         }
 
+        class ScoutAnt : Ant
+        {
+            public ScoutAnt(int StartRow, int StartColumn, int NestInRow, int NestInColumn)
+                : base(StartRow, StartColumn, NestInRow, NestInColumn)
+            {
+                TypeOfAnt = "Scout";
+                FoodCapacity = 5;
+            }
+
+            public override void ChooseCellToMoveTo(List<int> ListOfNeighbours, int IndexOfNeighbourWithStrongestPheromone)
+            {
+                if (AmountOfFoodCarried > 0)
+                {
+                    if (Row > NestRow)
+                    {
+                        Row--;
+                    }
+                    else if (Row < NestRow)
+                    {
+                        Row++;
+                    }
+                    if (Column > NestColumn)
+                    {
+                        Column--;
+                    }
+                    else if (Column < NestColumn)
+                    {
+                        Column++;
+                    }
+                }
+                else
+                {
+                    int IndexToUse = ChooseRandomNeighbour(ListOfNeighbours);
+                    ChangeCell(IndexToUse, ref Row, ref Column);
+                }
+            }
+        }
+
         class Nest : Entity
         {
             protected int FoodLevel, NumberOfQueens;

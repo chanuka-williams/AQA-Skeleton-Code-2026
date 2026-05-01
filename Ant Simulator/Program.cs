@@ -202,12 +202,21 @@ namespace AntSimCS
                     DisplayGrid[Row, Column] = GetNestInCell(CurrentCell) != null ? $"{Symbols["Nest"]}{GetNestInCell(CurrentCell).GetFoodLevel() / 100}" : DisplayGrid[Row, Column];
                 }
 
-                Console.WriteLine("     1    2    3    4    5 ");
+
+                //Prints column headers dynamically
+                Console.Write("  ");
+                for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
+                {
+                    Console.Write($"    {Row + 1}");
+                }
+                Console.Write("\n");
+
                 for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
                 {
                     Console.WriteLine("  +----+----+----+----+----+");
                     for (int Column = 0; Column < DisplayGrid.GetLength(1); Column++)
                     {
+                        
                         if (Column == 0)
                         {
                             Console.Write($"{Row + 1} ");

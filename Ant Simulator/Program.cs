@@ -188,7 +188,7 @@ namespace AntSimCS
 
             private static void PrintColumnHeaders(int Columns, int Offset)
             {
-                PrintOffset(Offset);
+                PrintOffset(Offset - 1);
 
                 for (int Column = 0; Column < Columns; Column++)
                     Console.Write($"    {Column + 1}");

@@ -743,7 +743,7 @@ namespace AntSimCS
             public ScoutAnt(int StartRow, int StartColumn, int NestInRow, int NestInColumn)
                 : base(StartRow, StartColumn, NestInRow, NestInColumn)
             {
-                TypeOfAnt = "Scout";
+                TypeOfAnt = "scout";
                 FoodCapacity = 5;
             }
 

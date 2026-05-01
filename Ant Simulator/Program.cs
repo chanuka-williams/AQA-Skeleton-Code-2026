@@ -824,6 +824,10 @@ namespace AntSimCS
                         {
                             Count += 10;
                         }
+                        else if (A.GetTypeOfAnt() == "scout")
+                        {
+                            Count += 1;
+                        }
                         else
                         {
                             Count += 2;

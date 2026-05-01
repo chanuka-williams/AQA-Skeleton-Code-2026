@@ -240,11 +240,8 @@ namespace AntSimCS
                     {
 
                         if (Column == 0)
-                        {
-                            int Offset = MaxOffset - (int)Math.Log10(Row + 1);
-                            Console.Write($"{Row + 1}");
-                            PrintOffset(Offset);
-                        }
+                            Console.Write($"{Row + 1}".PadRight(MaxOffset + 1));
+
 
                         Console.Write($"| {DisplayGrid[Row, Column]} ".PadRight(5));
 

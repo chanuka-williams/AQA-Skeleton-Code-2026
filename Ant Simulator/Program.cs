@@ -228,16 +228,12 @@ namespace AntSimCS
                     {
 
                         if (Column == 0)
-                        {
                             Console.Write($"{Row + 1} ");
-                        }
 
                         Console.Write($"| {DisplayGrid[Row, Column]} ".PadRight(5));
 
                         if (Column >= DisplayGrid.GetLength(1) - 1)
-                        {
                             Console.WriteLine("|");
-                        }
                     }
                 }
                 PrintRowDivider(DisplayGrid.GetLength(1));

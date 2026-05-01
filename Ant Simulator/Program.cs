@@ -179,6 +179,14 @@ namespace AntSimCS
                 }
             }
 
+            private static void PrintRowDivider(int Columns)
+            {
+                Console.Write("  +");
+                for (int Column = 0; Column < Columns; Column++)
+                    Console.Write("----+");
+                Console.Write("\n");
+            }
+
             public void DisplayGrid()
             {
                 var Symbols = new Dictionary<string, string>
@@ -204,7 +212,7 @@ namespace AntSimCS
 
 
                 //Prints column headers dynamically
-                Console.Write("  ");
+                Console.Write(" ");
                 for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
                 {
                     Console.Write($"    {Row + 1}");
@@ -213,10 +221,10 @@ namespace AntSimCS
 
                 for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
                 {
-                    Console.WriteLine("  +----+----+----+----+----+");
+                    PrintRowDivider(DisplayGrid.GetLength(1));
                     for (int Column = 0; Column < DisplayGrid.GetLength(1); Column++)
                     {
-                        
+
                         if (Column == 0)
                         {
                             Console.Write($"{Row + 1} ");
@@ -230,7 +238,7 @@ namespace AntSimCS
                         }
                     }
                 }
-                Console.WriteLine("  +----+----+----+----+----+");
+                PrintRowDivider(DisplayGrid.GetLength(1));
             }
 
             public void SetUpANestAt(int Row, int Column)

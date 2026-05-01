@@ -159,6 +159,7 @@ namespace AntSimCS
                     } while (!Allowed);
                     SetUpANestAt(Row, Column);
                 }
+
                 for (int Count = 1; Count <= StartingNumberOfFoodCells; Count++)
                 {
                     bool Allowed;
@@ -179,17 +180,27 @@ namespace AntSimCS
                 }
             }
 
-            private static void PrintColumnHeaders(int Columns)
+            private static void PrintOffset(int Offset)
             {
-                Console.Write(" ");
+                for (int i = 0; i < Offset; i++)
+                    Console.Write(" ");
+            }
+
+            private static void PrintColumnHeaders(int Columns, int Offset)
+            {
+                PrintOffset(Offset);
+
                 for (int Column = 0; Column < Columns; Column++)
                     Console.Write($"    {Column + 1}");
+
                 Console.Write("\n");
             }
 
-            private static void PrintRowDivider(int Columns)
+            private static void PrintRowDivider(int Columns, int Offset)
             {
-                Console.Write("  +");
+                PrintOffset(Offset + 1);
+
+                Console.Write("+");
                 for (int Column = 0; Column < Columns; Column++)
                     Console.Write("----+");
                 Console.Write("\n");
@@ -218,17 +229,22 @@ namespace AntSimCS
                     DisplayGrid[Row, Column] = GetNestInCell(CurrentCell) != null ? $"{Symbols["Nest"]}{GetNestInCell(CurrentCell).GetFoodLevel() / 100}" : DisplayGrid[Row, Column];
                 }
 
+                int MaxOffset = (int)Math.Log10(DisplayGrid.GetLength(0)) + 1;
 
-                PrintColumnHeaders(DisplayGrid.GetLength(1));
+                PrintColumnHeaders(DisplayGrid.GetLength(1), MaxOffset);
 
                 for (int Row = 0; Row < DisplayGrid.GetLength(0); Row++)
                 {
-                    PrintRowDivider(DisplayGrid.GetLength(1));
+                    PrintRowDivider(DisplayGrid.GetLength(1), MaxOffset);
                     for (int Column = 0; Column < DisplayGrid.GetLength(1); Column++)
                     {
 
                         if (Column == 0)
-                            Console.Write($"{Row + 1} ");
+                        {
+                            int Offset = MaxOffset - (int)Math.Log10(Row + 1);
+                            Console.Write($"{Row + 1}");
+                            PrintOffset(Offset);
+                        }
 
                         Console.Write($"| {DisplayGrid[Row, Column]} ".PadRight(5));
 
@@ -236,7 +252,8 @@ namespace AntSimCS
                             Console.WriteLine("|");
                     }
                 }
-                PrintRowDivider(DisplayGrid.GetLength(1));
+
+                PrintRowDivider(DisplayGrid.GetLength(1), MaxOffset);
             }
 
             public void SetUpANestAt(int Row, int Column)
